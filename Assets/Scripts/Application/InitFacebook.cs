@@ -1,9 +1,8 @@
-﻿//using Facebook.Unity;
+﻿// using Facebook.Unity;
 using UnityEngine;
 
 public class InitFacebook : MonoBehaviour
-{
-    /*
+{/*
     private void Start()
     {
         Initialize();
@@ -29,6 +28,5 @@ public class InitFacebook : MonoBehaviour
         FB.ActivateApp();
         FB.LogAppEvent(AppEventName.ActivatedApp);
         FB.Mobile.SetAdvertiserIDCollectionEnabled(true);
-    }
-    */
+    }*/
 }
