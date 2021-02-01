@@ -11,6 +11,9 @@ public class GAEvents : MonoBehaviour
 
     private void Start()
     {
+        if (GameManager.instance == null)
+            return;
+
         GameManager.instance.onStart.AddListener(() => StartLevel());
         GameManager.instance.onLost.AddListener(() => FailLevel());
         GameManager.instance.onWin.AddListener(() => EndLevel());
