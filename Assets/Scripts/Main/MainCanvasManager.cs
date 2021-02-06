@@ -2,17 +2,12 @@
 using UnityEngine.Events;
 using System.Collections;
 using UnityEngine.UI;
+using data;
 
-namespace main.management
+namespace management
 {
     public class MainCanvasManager : MonoBehaviour
     {
-        private static MainCanvasManager _instance;
-        public static MainCanvasManager instance
-        {
-            get { return _instance; }
-        }
-
         [Header("Events")]
         [SerializeField]
         private UnityEvent _onWin;
@@ -26,17 +21,15 @@ namespace main.management
         [SerializeField]
         private Text _textLevel;
 
-        // Start is called before the first frame update
-        private void Awake()
-        {
-            _instance = this;
-        }
+        private GameManager _gameManager;
 
         // Start is called before the first frame update
         private void Start()
         {
-            GameManager.instance.onWin.AddListener(() => StartCoroutine(WaitAndActiveCallWin()));
-            GameManager.instance.onLost.AddListener(() => OnLost());
+            _gameManager = GameManager.instance;
+
+            _gameManager.onWin.AddListener(() => StartCoroutine(WaitAndActiveCallWin()));
+            _gameManager.onLost.AddListener(() => OnLost());
 
             InitializedTextLevel();
         }
@@ -53,9 +46,10 @@ namespace main.management
                 _textLevel.text = "LEVEL " + clevel;
             }
         }
+
         public void OnClickMenu()
         {
-            ControllerInputs3D.instance.allowInputs = false;
+            _gameManager.controllerInputs.allowInputs = false;
         }
 
         private void OnWin()

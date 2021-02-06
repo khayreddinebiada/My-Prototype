@@ -1,51 +1,42 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace lib
+namespace management
 {
     public class GameSceneManager : MonoBehaviour
     {
-
-        // Start is called before the first frame update
-        private void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        private void Update()
-        {
-
-        }
+        [SerializeField]
+        private float _waitAndScene = 0;
 
         public void Replay()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            StartCoroutine(WaitAndGoScene(SceneManager.GetActiveScene().name, false));
         }
 
         public void ReplayAsync()
         {
-            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
-        }
-
-        public void GoScene(int sceneIndex)
-        {
-            SceneManager.LoadScene(sceneIndex);
+            StartCoroutine(WaitAndGoScene(SceneManager.GetActiveScene().name, true));
         }
 
         public void GoScene(string sceneName)
         {
-            SceneManager.LoadScene(sceneName);
-        }
-
-        public void GoSceneAsync(int sceneIndex)
-        {
-            SceneManager.LoadSceneAsync(sceneIndex);
+            StartCoroutine(WaitAndGoScene(sceneName, false));
         }
 
         public void GoSceneAsync(string sceneName)
         {
-            SceneManager.LoadSceneAsync(sceneName);
+            StartCoroutine(WaitAndGoScene(sceneName, true));
+        }
+
+        private IEnumerator WaitAndGoScene(string sceneName, bool async)
+        {
+            yield return new WaitForSeconds(_waitAndScene);
+            
+            if (async)
+                SceneManager.LoadSceneAsync(sceneName);
+            else
+                SceneManager.LoadScene(sceneName);
         }
     }
 }

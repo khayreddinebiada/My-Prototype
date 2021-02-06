@@ -1,16 +1,10 @@
 ﻿using UnityEngine;
-using main.management;
+using UnityEngine.Events;
 
-namespace main
+namespace control
 {
     public class ControllerInputs3D : MonoBehaviour
     {
-        private static ControllerInputs3D _instance;
-        public static ControllerInputs3D instance
-        {
-            get { return _instance; }
-        }
-
         private Vector3 _mouseFocusPosition;
         public Vector3 mouseFocusPosition
         {
@@ -20,17 +14,46 @@ namespace main
         [HideInInspector]
         public bool allowInputs { set; get; }
 
-        // Start is called before the first frame update
+        private bool _isDraging = false;
+        public bool isDraging
+        {
+            get { return _isDraging; }
+        }
+
+        private UnityEvent _onTake;
+        public UnityEvent onTake
+        {
+            get { return _onTake; }
+        }
+
+        private UnityEvent _onLeave;
+        public UnityEvent onLeave
+        {
+            get { return _onLeave; }
+        }
+
+        private UnityEvent _onCollect;
+        public UnityEvent onCollect
+        {
+            get { return _onCollect; }
+        }
+
+        private GameManager _gameManager;
+
         private void Awake()
         {
-            _instance = this;
+            _onTake = new UnityEvent();
+            _onLeave = new UnityEvent();
+            _onCollect = new UnityEvent();
         }
 
         private void Start()
         {
-            GameManager.instance.onStart.AddListener(() => { allowInputs = true; });
-            GameManager.instance.onWin.AddListener(() => { allowInputs = false; });
-            GameManager.instance.onLost.AddListener(() => { allowInputs = false; });
+            _gameManager = GameManager.instance;
+
+            _gameManager.onStart.AddListener(() => { allowInputs = true; });
+            _gameManager.onWin.AddListener(() => { allowInputs = false; });
+            _gameManager.onLost.AddListener(() => { allowInputs = false; });
         }
 
         
@@ -84,6 +107,24 @@ namespace main
             }
 
             return null;
+        }
+
+        private void MakeTake()
+        {
+            _onTake.Invoke();
+            _isDraging = true;
+        }
+
+        private void MakeLeave()
+        {
+            _onLeave.Invoke();
+            _isDraging = false;
+        }
+
+        private void MakeCollect()
+        {
+            _onCollect.Invoke();
+            _isDraging = false;
         }
     }
 }

@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using data;
+using UnityEngine;
 
-namespace main.management
+namespace management
 {
     public class TutorialManager : MonoBehaviour
     {

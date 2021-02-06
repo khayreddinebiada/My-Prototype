@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using data;
+using UnityEngine;
 
-namespace main.management
+namespace management
 {
     public class LevelsManager : MonoBehaviour
     {
@@ -27,24 +28,28 @@ namespace main.management
         private void Start()
         {
             GameManager.instance.onWin.AddListener(() => OnWin());
-            InstanceCurrentLevel();
+
+            ActiveCurrentLevel();
         }
 
-        public void InstanceCurrentLevel()
+        public void ActiveCurrentLevel()
         {
+            if (_levelsData.Length == 0)
+                return;
+
             if (_testMode)
-                Instantiate(_levelsData[_indexLevelTesting].levelPrefab);
+                _levelsData[_indexLevelTesting].levelPrefab.SetActive(true);
             else
             {
                 if (GlobalData.IsRandomChoiceLevels())
                 {
                     _indexCurrentLevel = Random.Range(2, _levelsData.Length);
-                    Instantiate(_levelsData[_indexCurrentLevel].levelPrefab);
+                    _levelsData[_indexCurrentLevel].levelPrefab.SetActive(true);
                 }
                 else
                 {
                     _indexCurrentLevel = GlobalData.indexCurrentLevel;
-                    Instantiate(_levelsData[_indexCurrentLevel].levelPrefab);
+                    _levelsData[_indexCurrentLevel].levelPrefab.SetActive(true);
                 }
             }
         }

@@ -426,7 +426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd8f5dbc60305e747a67bfafcf2e5080, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _waitAndScene: 1
+  _waitAndScene: 0
 --- !u!114 &599840887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -478,10 +478,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 599840881}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62e785beb000ded42b82f67c4bed3ac8, type: 3}
+  m_Script: {fileID: 11500000, guid: 39aa98ee98d101b48844850bbbab69f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _body: {fileID: 0}
+  allowInputs: 1
 --- !u!1 &662838881
 GameObject:
   m_ObjectHideFlags: 0
@@ -1728,15 +1728,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18b86a8fbc9a0cb43b71288d9fd5c470, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _onStart:
-    m_PersistentCalls:
-      m_Calls: []
-  _onWin:
-    m_PersistentCalls:
-      m_Calls: []
-  _onLost:
-    m_PersistentCalls:
-      m_Calls: []
+  _ontrollerInputs: {fileID: 0}
+  _levelsManager: {fileID: 0}
+  _mainCanvasManager: {fileID: 0}
 --- !u!4 &1730585455
 Transform:
   m_ObjectHideFlags: 0
@@ -1793,6 +1787,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1921798104}
   - component: {fileID: 1921798105}
+  - component: {fileID: 1921798106}
   m_Layer: 0
   m_Name: Levels Manager
   m_TagString: Untagged
@@ -1821,7 +1816,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1921798103}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a79a1d3fc4395c43881e013c8a7e7eb, type: 3}
   m_Name: 
@@ -1829,6 +1824,19 @@ MonoBehaviour:
   _testMode: 0
   _indexLevelTesting: 0
   _levelsData: []
+--- !u!114 &1921798106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1921798103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd8f5dbc60305e747a67bfafcf2e5080, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _waitAndScene: 0
 --- !u!1 &2019560877
 GameObject:
   m_ObjectHideFlags: 0
