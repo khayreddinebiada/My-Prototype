@@ -77,6 +77,7 @@ namespace lib
             _gameManager.onStart.AddListener(() => { allowInputs = true; });
             _gameManager.onWin.AddListener(() => { allowInputs = false; });
             _gameManager.onLost.AddListener(() => { allowInputs = false; });
+            _gameManager.onGoHome.AddListener(() => { allowInputs = false; });
         }
 
         public void OnBeginDrag(PointerEventData eventData)

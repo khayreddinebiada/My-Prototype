@@ -28,7 +28,13 @@ public class GameManager : MonoBehaviour
     {
         get { return _onLost; }
     }
-    
+
+    private UnityEvent _onGoHome;
+    public UnityEvent onGoHome
+    {
+        get { return _onGoHome; }
+    }
+
     private bool _isStarted = false;
     public bool isStarted
     {
@@ -47,6 +53,11 @@ public class GameManager : MonoBehaviour
         get { return _isLost; }
     }
 
+    private bool _isGameFinished = false;
+    public bool isGameFinished
+    {
+        get { return _isGameFinished; }
+    }
 
     [Header("Controls and Managers")]
     [SerializeField]
@@ -78,7 +89,7 @@ public class GameManager : MonoBehaviour
         _onStart = new UnityEvent();
         _onWin = new UnityEvent();
         _onLost = new UnityEvent();
-
+        _onGoHome = new UnityEvent();
     }
 
     private void Start()
@@ -98,6 +109,7 @@ public class GameManager : MonoBehaviour
             return;
 
         _isWin = true;
+        _isGameFinished = true;
         _onWin.Invoke();
     }
 
@@ -107,11 +119,18 @@ public class GameManager : MonoBehaviour
             return;
 
         _isLost = true;
+        _isGameFinished = true;
         _onLost.Invoke();
     }
 
     public bool IsGameFinished()
     {
         return !(_isWin && _isLost);
+    }
+
+    public void MakeGoHome()
+    {
+        _onGoHome.Invoke();
+        _isGameFinished = true;
     }
 }

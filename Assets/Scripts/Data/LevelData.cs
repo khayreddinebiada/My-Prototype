@@ -2,14 +2,8 @@
 
 namespace data
 {
-    [CreateAssetMenu(fileName = "LevelInfo", menuName = "Data/Add Level Data", order = 1)]
-    public class LevelData : ScriptableObject
+    public class LevelData : MonoBehaviour
     {
-        [SerializeField]
-        private GameObject _levelPrefab;
-        public GameObject levelPrefab
-        {
-            get { return _levelPrefab; }
-        }
+
     }
 }

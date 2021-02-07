@@ -47,11 +47,6 @@ namespace management
             }
         }
 
-        public void OnClickMenu()
-        {
-            _gameManager.controllerInputs.allowInputs = false;
-        }
-
         private void OnWin()
         {
             _onWin.Invoke();
@@ -77,5 +72,14 @@ namespace management
             _onLost.Invoke();
         }
 
+        public void GoHome()
+        {
+            _gameManager.MakeGoHome();
+        }
+
+        public void Play()
+        {
+            _gameManager.MakeStart();
+        }
     }
 }
