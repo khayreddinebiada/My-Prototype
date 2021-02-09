@@ -3,24 +3,17 @@
 namespace app
 {
     public class AdsManager : MonoBehaviour
-    {
-        /*
-        public static string uniqueUserId = "Arcade Hero";
+    {/*
         [SerializeField]
-        private IronSourceBannerPosition _ironSourceBannerPosition;
-        [SerializeField]
-        private string androidKey = "e8666441";
-        [SerializeField]
-        private string iosKey = "e8666441";
-        [SerializeField]
+        private AdsSettings _adsSettings;
 
         // Use this for initialization
         private void Start()
         {
-    #if UNITY_ANDROID
-            string appKey = androidKey;
-    #elif UNITY_IPHONE
-            string appKey = iosKey;
+#if UNITY_ANDROID
+            string appKey = _adsSettings._androidKey;
+#elif UNITY_IPHONE
+            string appKey = _adsSettings.iosKey;
     #else
             string appKey = "unexpected_platform";
     #endif
@@ -35,7 +28,7 @@ namespace app
             IronSource.Agent.init(appKey);
 
             // Load Banner example
-            IronSource.Agent.loadBanner(IronSourceBannerSize.BANNER, _ironSourceBannerPosition);
+            IronSource.Agent.loadBanner(IronSourceBannerSize.BANNER, _adsSettings.ironSourceBannerPosition);
             IronSource.Agent.loadInterstitial();
 
             if (GameManager.instance != null)
@@ -190,7 +183,7 @@ namespace app
         }
 
         #endregion
-        */
+		*/
     }
 
 }
