@@ -72,11 +72,6 @@ namespace management
             _onLost.Invoke();
         }
 
-        public void GoHome()
-        {
-            _gameManager.MakeGoHome();
-        }
-
         public void Play()
         {
             _gameManager.MakeStart();

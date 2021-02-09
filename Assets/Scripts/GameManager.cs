@@ -127,10 +127,4 @@ public class GameManager : MonoBehaviour
     {
         return !(_isWin && _isLost);
     }
-
-    public void MakeGoHome()
-    {
-        _onGoHome.Invoke();
-        _isGameFinished = true;
-    }
 }
