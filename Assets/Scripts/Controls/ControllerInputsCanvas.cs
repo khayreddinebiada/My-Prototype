@@ -6,6 +6,9 @@ namespace lib
 {
     public class ControllerInputsCanvas : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
     {
+        [SerializeField]
+        private GameManager _gameManager;
+
         private bool _isClicked = false;
         public bool isClicked
         {
@@ -61,8 +64,6 @@ namespace lib
         }
         #endregion
 
-        private GameManager _gameManager;
-
         private void Awake()
         {
             _onEndDrag = new UnityEvent();
@@ -72,12 +73,9 @@ namespace lib
 
         private void Start()
         {
-            _gameManager = GameManager.instance;
-
             _gameManager.onStart.AddListener(() => { allowInputs = true; });
             _gameManager.onWin.AddListener(() => { allowInputs = false; });
             _gameManager.onLost.AddListener(() => { allowInputs = false; });
-            _gameManager.onGoHome.AddListener(() => { allowInputs = false; });
         }
 
         public void OnBeginDrag(PointerEventData eventData)

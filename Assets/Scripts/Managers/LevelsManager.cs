@@ -6,6 +6,9 @@ namespace management
     public class LevelsManager : MonoBehaviour
     {
         [SerializeField]
+        private GameManager _gameManager;
+
+        [SerializeField]
         private bool _testMode = false;
         [SerializeField]
         private int _indexLevelTesting = 0;
@@ -24,22 +27,26 @@ namespace management
             get { return _indexCurrentLevel; }
         }
 
-        private GameManager _gameManager;
+        private void Awake()
+        {
+            ActiveCurrentLevel();
+        }
 
         // Start is called before the first frame update
         private void Start()
         {
-            _gameManager = GameManager.instance;
-
-            _gameManager.onStart.AddListener(() => ActiveCurrentLevel());
             _gameManager.onWin.AddListener(() => OnWin());
-            _gameManager.onGoHome.AddListener(() => OnGoHome());
         }
 
         public void ActiveCurrentLevel()
         {
             if (_levelsData.Length == 0)
                 return;
+
+            foreach (var item in _levelsData)
+            {
+                item.gameObject.SetActive(false);
+            }
 
             if (_testMode)
                 _levelsData[_indexLevelTesting].gameObject.SetActive(true);
@@ -55,14 +62,6 @@ namespace management
                     _indexCurrentLevel = GlobalData.indexCurrentLevel;
                     _levelsData[_indexCurrentLevel].gameObject.SetActive(true);
                 }
-            }
-        }
-
-        private void OnGoHome()
-        {
-            foreach (LevelData item in _levelsData)
-            {
-                item.gameObject.SetActive(false);
             }
         }
 

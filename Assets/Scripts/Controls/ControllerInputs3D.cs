@@ -54,10 +54,8 @@ namespace control
             _gameManager.onStart.AddListener(() => { allowInputs = true; });
             _gameManager.onWin.AddListener(() => { allowInputs = false; });
             _gameManager.onLost.AddListener(() => { allowInputs = false; });
-            _gameManager.onGoHome.AddListener(() => { allowInputs = false; });
         }
 
-        
         // Update is called once per frame
         private void Update()
         {

@@ -15,11 +15,5 @@ namespace management
         {
             _currentScore = 0;
         }
-
-        // Update is called once per frame
-        private void Update()
-        {
-
-        }
     }
 }

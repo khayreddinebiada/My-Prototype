@@ -1,6 +1,6 @@
 ﻿namespace lib
 {
-    public static class MathF
+    public static class Maths
     {
         public static float ResetAngle(float angle)
         {

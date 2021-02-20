@@ -29,12 +29,6 @@ public class GameManager : MonoBehaviour
         get { return _onLost; }
     }
 
-    private UnityEvent _onGoHome;
-    public UnityEvent onGoHome
-    {
-        get { return _onGoHome; }
-    }
-
     private bool _isStarted = false;
     public bool isStarted
     {
@@ -89,7 +83,6 @@ public class GameManager : MonoBehaviour
         _onStart = new UnityEvent();
         _onWin = new UnityEvent();
         _onLost = new UnityEvent();
-        _onGoHome = new UnityEvent();
     }
 
     private void Start()

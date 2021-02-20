@@ -8,6 +8,9 @@ namespace management
 {
     public class MainCanvasManager : MonoBehaviour
     {
+        [SerializeField]
+        private GameManager _gameManager;
+
         [Header("Events")]
         [SerializeField]
         private UnityEvent _onWin;
@@ -15,19 +18,11 @@ namespace management
         private UnityEvent _onLost;
 
         [SerializeField]
-        private GameObject _giftPanel;
-
-
-        [SerializeField]
         private Text _textLevel;
-
-        private GameManager _gameManager;
 
         // Start is called before the first frame update
         private void Start()
         {
-            _gameManager = GameManager.instance;
-
             _gameManager.onWin.AddListener(() => StartCoroutine(WaitAndActiveCallWin()));
             _gameManager.onLost.AddListener(() => OnLost());
 
@@ -50,15 +45,6 @@ namespace management
         private void OnWin()
         {
             _onWin.Invoke();
-
-            if (GlobalData.indexCurrentLevel == 4 || GlobalData.indexCurrentLevel == 2)
-            {
-                _giftPanel.SetActive(true);
-            }
-            else
-            {
-                _giftPanel.SetActive(false);
-            }
         }
 
         private IEnumerator WaitAndActiveCallWin()
