@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
-using System.Collections;
 using UnityEngine.UI;
-using data;
 
 namespace management
 {
@@ -21,17 +19,20 @@ namespace management
         private Text _textLevel;
 
         // Start is called before the first frame update
+        private void Awake()
+        {
+            _gameManager.onWin += OnWin;
+            _gameManager.onLose += OnLose;
+        }
+
         private void Start()
         {
-            _gameManager.onWin.AddListener(() => StartCoroutine(WaitAndActiveCallWin()));
-            _gameManager.onLost.AddListener(() => OnLost());
-
             InitializedTextLevel();
         }
 
         private void InitializedTextLevel()
         {
-            int clevel = GlobalData.playerCurrentLevel + 1;
+            int clevel = _gameManager.gameData.data.playerCurrentLevel + 1;
             if (clevel < 10)
             {
                 _textLevel.text = "LEVEL 0" + clevel;
@@ -47,13 +48,7 @@ namespace management
             _onWin.Invoke();
         }
 
-        private IEnumerator WaitAndActiveCallWin()
-        {
-            yield return new WaitForSeconds(1);
-            OnWin();
-        }
-
-        private void OnLost()
+        private void OnLose()
         {
             _onLost.Invoke();
         }
@@ -62,5 +57,13 @@ namespace management
         {
             _gameManager.MakeStart();
         }
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (_gameManager == null)
+                _gameManager = GetComponent<GameManager>();
+        }
+#endif
     }
 }

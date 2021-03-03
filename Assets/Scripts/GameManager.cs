@@ -2,31 +2,48 @@
 using management;
 using UnityEngine;
 using UnityEngine.Events;
+using data;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager _instance;
-    public static GameManager instance
+    public delegate void GameEvents();
+    private event GameEvents _onWin;
+    public event GameEvents onWin
     {
-        get { return _instance; }
+        add
+        {
+            _onWin += value;
+        }
+        remove
+        {
+            _onWin -= value;
+        }
     }
 
-    private UnityEvent _onStart;
-    public UnityEvent onStart
+    private event GameEvents _onLose;
+    public event GameEvents onLose
     {
-        get { return _onStart; }
+        add
+        {
+            _onLose += value;
+        }
+        remove
+        {
+            _onLose -= value;
+        }
     }
 
-    private UnityEvent _onWin;
-    public UnityEvent onWin
+    private event GameEvents _onStart;
+    public event GameEvents onStart
     {
-        get { return _onWin; }
-    }
-
-    private UnityEvent _onLost;
-    public UnityEvent onLost
-    {
-        get { return _onLost; }
+        add
+        {
+            _onStart += value;
+        }
+        remove
+        {
+            _onStart -= value;
+        }
     }
 
     private bool _isStarted = false;
@@ -55,10 +72,10 @@ public class GameManager : MonoBehaviour
 
     [Header("Controls and Managers")]
     [SerializeField]
-    private ControllerInputs3D _ontrollerInputs;
+    private ControllerInputs3D _controllerInputs;
     public ControllerInputs3D controllerInputs
     {
-        get { return _ontrollerInputs; }
+        get { return _controllerInputs; }
     }
 
     [SerializeField]
@@ -75,14 +92,11 @@ public class GameManager : MonoBehaviour
         get { return _mainCanvasManager; }
     }
 
-    // Start is called before the first frame update
-    private void Awake()
+    [SerializeField]
+    private GameData _gameData;
+    public GameData gameData
     {
-        _instance = this;
-
-        _onStart = new UnityEvent();
-        _onWin = new UnityEvent();
-        _onLost = new UnityEvent();
+        get { return _gameData; }
     }
 
     private void Start()
@@ -113,11 +127,28 @@ public class GameManager : MonoBehaviour
 
         _isLost = true;
         _isGameFinished = true;
-        _onLost.Invoke();
+        _onLose.Invoke();
     }
 
     public bool IsGameFinished()
     {
         return !(_isWin && _isLost);
     }
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        if (_gameData == null)
+            _gameData = FindObjectOfType<GameData>();
+
+        if (_mainCanvasManager == null)
+            _mainCanvasManager = FindObjectOfType<MainCanvasManager>();
+
+        if (_controllerInputs == null)
+            _controllerInputs = FindObjectOfType<ControllerInputs3D>();
+
+        if (_levelsManager == null)
+            _levelsManager = FindObjectOfType<LevelsManager>();
+    }
+#endif
 }

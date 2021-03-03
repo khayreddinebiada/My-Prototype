@@ -1,16 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace control
 {
     public class ControllerInputs3D : MonoBehaviour
     {
-        private Vector3 _mouseFocusPosition;
-        public Vector3 mouseFocusPosition
-        {
-            get { return _mouseFocusPosition; }
-        }
-
         [HideInInspector]
         public bool allowInputs { set; get; }
 
@@ -20,40 +15,55 @@ namespace control
             get { return _isDraging; }
         }
 
-        private UnityEvent _onTake;
-        public UnityEvent onTake
+        public delegate void Action();
+
+        private event Action _onTake;
+        public event Action onTake
         {
-            get { return _onTake; }
+            add
+            {
+                _onTake += value;
+            }
+            remove
+            {
+                _onTake -= value;
+            }
         }
 
-        private UnityEvent _onLeave;
-        public UnityEvent onLeave
+        private event Action _onLeave;
+        public event Action onLeave
         {
-            get { return _onLeave; }
+            add
+            {
+                _onTake += value;
+            }
+            remove
+            {
+                _onTake -= value;
+            }
         }
 
-        private UnityEvent _onCollect;
-        public UnityEvent onCollect
+        private event Action _onCollect;
+        public event Action onCollect
         {
-            get { return _onCollect; }
+            add
+            {
+                _onTake += value;
+            }
+            remove
+            {
+                _onTake -= value;
+            }
         }
+
 
         private GameManager _gameManager;
 
         private void Awake()
         {
-            _onTake = new UnityEvent();
-            _onLeave = new UnityEvent();
-            _onCollect = new UnityEvent();
-        }
-
-        private void Start()
-        {
-            _gameManager = GameManager.instance;
-
-            _gameManager.onStart.AddListener(() => { allowInputs = true; });
-            _gameManager.onWin.AddListener(() => { allowInputs = false; });
-            _gameManager.onLost.AddListener(() => { allowInputs = false; });
+            _gameManager.onStart += () => { allowInputs = true; };
+            _gameManager.onWin += () => { allowInputs = false; };
+            _gameManager.onLose += () => { allowInputs = false; };
         }
 
         // Update is called once per frame
@@ -125,5 +135,13 @@ namespace control
             _onCollect.Invoke();
             _isDraging = false;
         }
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (_gameManager == null)
+                _gameManager = FindObjectOfType<GameManager>();
+        }
+#endif
     }
 }

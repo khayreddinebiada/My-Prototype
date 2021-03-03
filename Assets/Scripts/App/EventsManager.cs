@@ -4,17 +4,17 @@ namespace app
 {
     public class EventsManager : MonoBehaviour
     {
+        [SerializeField]
+        private GameManager _gameManager;
 
-        private void OnEnable()
+        private void Awake()
         {
             //if (InitAppsManager.agent == null)
             //    return;
 
-            GameManager gameManager = GameManager.instance;
-
-            gameManager.onStart.AddListener(() => OnStart());
-            gameManager.onLost.AddListener(() => OnLose());
-            gameManager.onWin.AddListener(() => OnWin());
+            _gameManager.onStart += OnStart;
+            _gameManager.onLose += OnLose;
+            _gameManager.onWin += OnWin;
         }
 
         private void OnStart()
@@ -34,5 +34,13 @@ namespace app
             Debug.Log("OnWin event");
             //InitAppsManager.agent.OnSendEvent(InitAppsManager.EventType.Win, ScoreManager.moneyCollected.ToString(), Random.Range(0, 4) == 0);
         }
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (_gameManager == null)
+                _gameManager = FindObjectOfType<GameManager>();
+        }
+#endif
     }
 }

@@ -5,10 +5,13 @@ namespace management
 {
     public class TutorialManager : MonoBehaviour
     {
+        [SerializeField]
+        private GameManager _gameManager;
+
         // Start is called before the first frame update
         private void Start()
         {
-            if (!GlobalData.ShowToturials())
+            if (_gameManager.gameData.data.isShowedToturials)
             {
                 Destroy(gameObject);
             }
@@ -18,9 +21,17 @@ namespace management
         {
             if (Input.GetMouseButtonDown(0))
             {
+                _gameManager.gameData.data.isShowedToturials = true;
                 Destroy(gameObject);
             }
-
         }
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (_gameManager == null)
+                _gameManager = FindObjectOfType<GameManager>();
+        }
+#endif
     }
 }

@@ -35,7 +35,7 @@ namespace management
         // Start is called before the first frame update
         private void Start()
         {
-            _gameManager.onWin.AddListener(() => OnWin());
+            _gameManager.onWin += OnWin;
         }
 
         public void ActiveCurrentLevel()
@@ -52,14 +52,14 @@ namespace management
                 _levelsData[_indexLevelTesting].gameObject.SetActive(true);
             else
             {
-                if (GlobalData.IsRandomChoiceLevels())
+                if (_gameManager.gameData.data.isRandom)
                 {
                     _indexCurrentLevel = Random.Range(2, _levelsData.Length);
                     _levelsData[_indexCurrentLevel].gameObject.SetActive(true);
                 }
                 else
                 {
-                    _indexCurrentLevel = GlobalData.indexCurrentLevel;
+                    _indexCurrentLevel = _gameManager.gameData.data.indexCurrentLevel;
                     _levelsData[_indexCurrentLevel].gameObject.SetActive(true);
                 }
             }
@@ -67,17 +67,27 @@ namespace management
 
         private void OnWin()
         {
-            GlobalData.playerCurrentLevel++;
+            _gameManager.gameData.data.playerCurrentLevel++;
 
             if (_indexCurrentLevel == _levelsData.Length - 1)
             {
-                GlobalData.SetRandomChoiceLevels();
+                _gameManager.gameData.data.isRandom = true;
             }
             else
             {
-                GlobalData.indexCurrentLevel++;
+                _gameManager.gameData.data.indexCurrentLevel++;
             }
         }
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (_gameManager == null)
+            {
+                _gameManager = FindObjectOfType<GameManager>();
+            }
+        }
+#endif
 
     }
 }

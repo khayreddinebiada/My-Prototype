@@ -45,37 +45,52 @@ namespace lib
         }
 
         #region events
-        private UnityEvent _onBeginDrag;
-        public UnityEvent onBeginDrag
+        public delegate void DragFuns();
+        private event DragFuns _onBeginDrag;
+        public event DragFuns onBeginDrag
         {
-            get { return _onBeginDrag; }
+            add
+            {
+                _onBeginDrag += value;
+            }
+            remove
+            {
+                _onBeginDrag -= value;
+            }
         }
 
-        private UnityEvent _onEndDrag;
-        public UnityEvent onEndDrag
+        private event DragFuns _onEndDrag;
+        public event DragFuns onEndDrag
         {
-            get { return _onEndDrag; }
+            add
+            {
+                _onEndDrag += value;
+            }
+            remove
+            {
+                _onEndDrag -= value;
+            }
         }
 
-        private UnityEvent _onClick;
-        public UnityEvent onClick
+        private event DragFuns _onClick;
+        public event DragFuns onClick
         {
-            get { return _onClick; }
+            add
+            {
+                _onClick += value;
+            }
+            remove
+            {
+                _onClick -= value;
+            }
         }
         #endregion
 
         private void Awake()
         {
-            _onEndDrag = new UnityEvent();
-            _onBeginDrag = new UnityEvent();
-            _onClick = new UnityEvent();
-        }
-
-        private void Start()
-        {
-            _gameManager.onStart.AddListener(() => { allowInputs = true; });
-            _gameManager.onWin.AddListener(() => { allowInputs = false; });
-            _gameManager.onLost.AddListener(() => { allowInputs = false; });
+            _gameManager.onStart += () => { allowInputs = true; };
+            _gameManager.onWin += () => { allowInputs = false; };
+            _gameManager.onLose += () => { allowInputs = false; };
         }
 
         public void OnBeginDrag(PointerEventData eventData)
